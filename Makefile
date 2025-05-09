@@ -8,6 +8,7 @@ SRCS =		check_av.c  	\
 			split.c 		\
 			utils.c			\
 			algo.c			\
+			algo2.c			\
 			main.c			\
 
 NAME = push_swap
@@ -16,14 +17,14 @@ REMOVE = rm -rf
 
 CC = cc
 
-CC_FLAGS = -Wall -Wextra -Werror
+CC_FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 .c.o:
 		$(CC) $(CC_FLAGS) -c $< -o $(<:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-				$(NAME) $(OBJS)
+				$(CC) $(CC_FLAGS) -o $(NAME) $(OBJS)
 
 clean:
 		$(REMOVE) $(OBJS)

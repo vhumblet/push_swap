@@ -6,7 +6,7 @@
 /*   By: vhumblet < vhumblet@student.s19.be>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 16:01:59 by vhumblet          #+#    #+#             */
-/*   Updated: 2025/04/17 18:40:27 by vhumblet         ###   ########.fr       */
+/*   Updated: 2025/05/08 21:31:17 by vhumblet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,9 @@ void	strs_to_list(char **str, t_list **list)
 		j = -1;
 		while (tmp[++j])
 		{
-			new_node = ft_lstnew(str[i]);
+			new_node = ft_lstnew(tmp[j]);
 			ft_lstadd_back(list, new_node);
 		}
-		j = -1;
-		while (tmp[++j])
-			ft_feel_free((void *)tmp[j]);
 	}
 }
 
@@ -47,27 +44,30 @@ t_list	*ft_lstnew(char *content)
 	return (rtn);
 }
 
-t_list	*ft_lstlast(t_list *lst)
+t_list	*ft_lstlast(t_list **lst)
 {
-	if (lst == NULL)
+	t_list	*tmp;
+
+	tmp = *lst;
+	if (tmp == NULL)
 		return (0);
-	while (lst)
+	while (tmp)
 	{
-		if (lst->next == NULL)
-			return (lst);
-		lst = lst->next;
+		if (tmp->next == NULL)
+			return (tmp);
+		tmp = tmp->next;
 	}
-	return (lst);
+	return (tmp);
 }
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*t;
 
-	if (*lst)
+	if (lst && *lst)
 	{
-		t = ft_lstlast(*lst);
-		t->next = &*new;
+		t = ft_lstlast(lst);
+		t->next = new;
 	}
 	else
 		*lst = new;

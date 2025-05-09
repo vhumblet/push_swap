@@ -6,7 +6,7 @@
 /*   By: vhumblet < vhumblet@student.s19.be>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:41:21 by vhumblet          #+#    #+#             */
-/*   Updated: 2025/04/17 18:40:42 by vhumblet         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:54:33 by vhumblet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,48 +29,62 @@ long	*ft_make_array(t_list **list, int nb)
 	return (array);
 }
 
-void	ft_sort_array(long *array)
+void	ft_sort_array(long *array, int nb)
 {
 	int	i;
 	int	j;
 	int	tmp;
 
-	i = 0;
-	while (array[i])
+	i = -1;
+	while (++i < nb)
 	{
-		j = 0;
-		while (array[i] < array[j] && j < i)
+		j = -1;
+		while (++j < i)
 		{
-			tmp = array[j];
-			array[j] = array[i];
-			array[i] = tmp;
-			j++;
+			if (array[i] < array[j])
+			{
+				tmp = array[j];
+				array[j] = array[i];
+				array[i] = tmp;
+			}
 		}
-		i++;
 	}
+	print_array(array, nb);
 }
 
-void	ft_put_index(t_list **list, long *array)
+void	ft_put_index(t_list **list, long *array, int size)
 {
 	int		i;
 	t_list	*ptr;
 
 	i = -1;
 	ptr = *list;
-	while (array[++i])
+	while (++i < size)
 	{
 		while (ft_atol(ptr->str) != array[i])
 		{
-			ptr = ptr->next;
-			if (ptr->next == NULL)
+			if (ptr && ptr->next == NULL)
 				ptr = *list;
+			else
+				ptr = ptr->next;
 		}
 		if (ft_atol(ptr->str) == array[i])
 		{
 			ptr->index = i + 1;
-			ptr = ptr->next;
-			if (ptr->next == NULL)
+			if (ptr && ptr->next == NULL)
 				ptr = *list;
+			else
+				ptr = ptr->next;
 		}
 	}
+	print_array(array, size);
+}
+
+void	print_array(long *array, int nb)
+{
+	int	i;
+
+	i = -1;
+	while (++i < nb)
+		printf("%ld\n", array[i]);
 }

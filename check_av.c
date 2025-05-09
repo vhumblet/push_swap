@@ -6,7 +6,7 @@
 /*   By: vhumblet < vhumblet@student.s19.be>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:00:34 by vhumblet          #+#    #+#             */
-/*   Updated: 2025/04/17 18:39:39 by vhumblet         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:59:08 by vhumblet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,27 @@ int	check_digit_av(t_list **list)
 	return (1);
 }
 
-int	check_int_max_min(long *array)
+int	check_int_max_min(long *array, int nb)
 {
 	int	i;
 
 	i = -1;
-	while (array[++i])
+	while (++i < nb)
 		if (array[i] > 2147483647 || array[i] < -2147483648)
 			return (0);
 	return (1);
 }
 
-int	check_double(long *array)
+int	check_double(long *array, int nb)
 {
 	int	i;
 	int	j;
 
 	i = -1;
-	while (array[++i])
+	while (++i < nb)
 	{
 		j = i + 1;
-		while (array[j])
+		while (j < nb)
 		{
 			if (array[i] == array[j])
 				return (0);
@@ -62,13 +62,15 @@ int	error_and_index(t_list **list)
 {
 	long	*array;
 	t_list	*ptr;
+	int		size;
 
 	ptr = *list;
-	array = ft_make_array(&ptr, ft_lstsize(ptr));
-	if (!check_double(array) || !check_int_max_min(array))
+	size = ft_lstsize(ptr);
+	array = ft_make_array(&ptr, size);
+	if (!check_double(array, size) || !check_int_max_min(array, size))
 		return (0);
-	ft_sort_array(array);
-	ft_put_index(&ptr, array);
+	ft_sort_array(array, size);
+	ft_put_index(&ptr, array, size);
 	ft_feel_free((void *)array);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: vhumblet < vhumblet@student.s19.be>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:49:15 by vhumblet          #+#    #+#             */
-/*   Updated: 2025/04/17 18:40:02 by vhumblet         ###   ########.fr       */
+/*   Updated: 2025/05/08 21:18:15 by vhumblet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,18 @@
 
 int	main(int ac, char **av)
 {
-	t_list	stack_a;
-	t_list	stack_b;
-	t_list	*ptr;
-	t_list	*ptrb;
+	t_list	*stack_a;
+	t_list	*stack_b;
 
-	stack_a.next = NULL;
-	stack_b.next = NULL;
-	*ptr = stack_a;
-	*ptrb = stack_b;
-	strs_to_list(av, ptr);
-	if (!check_digit_av(ptr) || !error_and_index(ptr))
+	(void)ac;
+	stack_a = NULL;
+	stack_b = NULL;
+	strs_to_list(av, &stack_a);
+	if (!check_digit_av(&stack_a) || !error_and_index(&stack_a))
 	{
 		write(1, "Error\n", 6);
 		return (0);
 	}
-	algo_main(ptr, ptrb);
+	algo_main(&stack_a, &stack_b);
+	return (0);
 }
